@@ -417,7 +417,82 @@ function pickaxeAbility9(x, y, reps, boost) {
     }, 5);
         });
 }
+function pickaxeAbility10(x, y, reps, boost) {
+    return new Promise((resolve) => {
+        canMine = false;
+        if (reps < 2) {
+            let procs = [
+                [],
+                [],
+                [],
+                []
+            ];
+        let thisLuck = 7 * boost;
+        let constraints = getParams(6, 6, x, y);
+        let origin = [y, x];
+    for (let i = 0; i < constraints[0]; i++) {
+        x--;
+        mineBlock(x, y, "ability", thisLuck);
+        y++;
+        mineBlock(x, y, "ability", thisLuck);
+    }
+    if (Math.random() <= 0.2) {
+        procs[1] = [x, y, true]
+    }
+    x = origin[1]
+    y = origin[0]
+    for (let i = 0; i < constraints[0]; i++) {
+        x++;
+        mineBlock(x, y, "ability", thisLuck);
+        y++;
+        mineBlock(x, y, "ability", thisLuck);
+    }
+    if (Math.random() <= 0.2) {
+        procs[1] = [x, y, true]
+    }
+    x = origin[1]
+    y = origin[0]
+    for (let i = 0; i < constraints[1]; i++) {
+        x++;
+        mineBlock(x, y, "ability", thisLuck);
+        y--;
+        mineBlock(x, y, "ability", thisLuck);
+    }
+    if (Math.random() <= 0.2) {
+        procs[1] = [x, y, true]
+    }
+    x = origin[1]
+    y = origin[0]
+    if (constraints[1] < constraints[0]) {
+        constraints[0] = constraints[1];
+    }
+    for (let i = 0; i < constraints[0]; i++) {
+        x--;
+        mineBlock(x, y, "ability", thisLuck);
+        y--;
+        mineBlock(x, y, "ability", thisLuck);
+    }
+    if (Math.random() <= 0.2) {
+        procs[2] = [x, y, true]
+    }
+    reps++;
+        for (let i = 0; i < procs.length; i++) {
+            if (procs[i][1]) {
+                pickaxeAbility9(procs[i][0], procs[i][1], reps, boost);
+            }
+        }
+        resolve(true);
+    } else {
+        displayArea();
+        resolve(true);
+    }
+    setTimeout(() => {
+        resolve(true);
+    }, 5);
+        });
+}
 /*
+
 PICKAXE 8
  
 
